@@ -274,38 +274,22 @@ class AiGaea:
                 
     async def send_ping(self, token: str, browser_id: str, uid: str, proxy=None, retries=500):
         url = "https://api.aigaea.net/api/network/ping"
-        data = json.dumps({
-            "browser_id": {
-                "browser_id": {
-                    "browser_id": {
-                        "browser_id": {
-                            "browser_id": {
-                                "browser_id": {
-                                    "browser_id": {
-                                        "browser_id": {
-                                            "browser_id": {
-                                                "browser_id": browser_id
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        })
+        data = json.dumps({"browser_id":browser_id, "timestamp":int(time.time()), "uid":uid, "version":"1.0.1"})
         headers = {
             "Accept": "*/*",
-            "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
             "Authorization": f"Bearer {token}",
             "Content-Length": str(len(data)),
+            "pragma": "no-cache",
+            "priority": "u=1, i",
             "Content-Type": "application/json",
-            "Origin": "chrome-extension://cpjicfogbgognnifjgmenmaldnmeeeib",
+            "Origin": "https://app.aigaea.net",
+            "referer": "https://app.aigaea.net/",
             "Sec-Fetch-Dest": "empty",
             "Sec-Fetch-Mode": "cors",
             "Sec-Fetch-Site": "none",
-            "Sec-Fetch-Storage-Access": "active",
+            "sec-ch-ua": '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
             "User-Agent": FakeUserAgent().random
         }
         for attempt in range(retries):
@@ -315,7 +299,7 @@ class AiGaea:
                     async with session.post(url=url, headers=headers, data=data) as response:
                         response.raise_for_status()
                         result = await response.json()
-                        return result
+                        return result['data']
             except (Exception, ClientResponseError) as e:
                 if attempt < retries - 1:
                     await asyncio.sleep(2)
@@ -449,19 +433,19 @@ class AiGaea:
                 ping = await self.send_ping(token, browser_id, uid, proxy)
                 if ping:
                     self.log(
-                        # f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
-                        # f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
-                        # f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-                        # f"{Fore.CYAN + Style.BRIGHT} Proxy {Style.RESET_ALL}"
-                        # f"{Fore.WHITE + Style.BRIGHT}{proxy}{Style.RESET_ALL}"
-                        # f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
-                        # f"{Fore.GREEN + Style.BRIGHT}PING {ping_count} Success{Style.RESET_ALL}"
-                        # f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
-                        # f"{Fore.WHITE + Style.BRIGHT}Network Score {ping['score']}{Style.RESET_ALL}"
-                        # f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
-                        # f"{Fore.CYAN + Style.BRIGHT}Host{Style.RESET_ALL}"
-                        # f"{Fore.WHITE + Style.BRIGHT} {host} {Style.RESET_ALL}"
-                        # f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
+                        f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
+                        f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
+                        f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                        f"{Fore.CYAN + Style.BRIGHT} Proxy {Style.RESET_ALL}"
+                        f"{Fore.WHITE + Style.BRIGHT}{proxy}{Style.RESET_ALL}"
+                        f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
+                        f"{Fore.GREEN + Style.BRIGHT}PING {ping_count} Success{Style.RESET_ALL}"
+                        f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
+                        f"{Fore.WHITE + Style.BRIGHT}Network Score {ping['score']}{Style.RESET_ALL}"
+                        f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
+                        f"{Fore.CYAN + Style.BRIGHT}Host{Style.RESET_ALL}"
+                        f"{Fore.WHITE + Style.BRIGHT} {host} {Style.RESET_ALL}"
+                        f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
                     )
                 else:
                     self.log(
@@ -490,7 +474,7 @@ class AiGaea:
                     end="\r",
                     flush=True
                 )
-                await asyncio.sleep(60)
+                await asyncio.sleep(600)
     
     async def main(self):
         try:
