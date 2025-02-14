@@ -274,7 +274,7 @@ class AiGaea:
                 
     async def send_ping(self, token: str, browser_id: str, uid: str, proxy=None, retries=500):
         url = "https://api.aigaea.net/api/network/ping"
-        data = json.dumps({"browser_id":browser_id, "timestamp":int(time.time()), "uid":uid, "version":"2.0.2"})
+        data = json.dumps({"browser_id":browser_id, "timestamp":int(time.time()), "uid":uid, "version":"1.0.1"})
         headers = {
             "Accept": "*/*",
             "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
