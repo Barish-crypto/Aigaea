@@ -295,7 +295,7 @@ class AiGaea:
         for attempt in range(retries):
             connector = ProxyConnector.from_url(proxy) if proxy else None
             try:
-                async with ClientSession(connector=connector, timeout=ClientTimeout(total=6000)) as session:
+                async with ClientSession(connector=connector, timeout=ClientTimeout(total=600)) as session:
                     async with session.post(url=url, headers=headers, data=data) as response:
                         response.raise_for_status()
                         result = await response.json()
