@@ -369,60 +369,60 @@ class AiGaea:
             name = user['name']
             uid = user['uid']
 
-            # asyncio.create_task(self.earning_log(token, name, proxy))
+            asyncio.create_task(self.earning_log(token, name, proxy))
 
-            # missions = await self.mission_lists(token, proxy)
-            # if missions:
-            #     completed = False
-            #     for mission in missions:
-            #         mission_id = str(mission['id'])
-            #         status = mission['status']
+            missions = await self.mission_lists(token, proxy)
+            if missions:
+                completed = False
+                for mission in missions:
+                    mission_id = str(mission['id'])
+                    status = mission['status']
 
-            #         if mission and status == "AVAILABLE":
-            #             complete = await self.complete_mission(token, mission_id, proxy)
-            #             if complete:
-            #                 self.log(
-            #                     f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
-            #                     f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
-            #                     f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-            #                     f"{Fore.CYAN + Style.BRIGHT} Mission {Style.RESET_ALL}"
-            #                     f"{Fore.WHITE + Style.BRIGHT}{mission['title']}{Style.RESET_ALL}"
-            #                     f"{Fore.GREEN + Style.BRIGHT} Is Completed {Style.RESET_ALL}"
-            #                     f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-            #                     f"{Fore.CYAN + Style.BRIGHT} Reward {Style.RESET_ALL}"
-            #                     f"{Fore.WHITE + Style.BRIGHT}{mission['points']} PTS{Style.RESET_ALL}"
-            #                     f"{Fore.CYAN + Style.BRIGHT} ]{Style.RESET_ALL}"
-            #                 )
-            #             else:
-            #                 self.log(
-            #                     f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
-            #                     f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
-            #                     f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-            #                     f"{Fore.CYAN + Style.BRIGHT} Mission {Style.RESET_ALL}"
-            #                     f"{Fore.WHITE + Style.BRIGHT}{mission['title']}{Style.RESET_ALL}"
-            #                     f"{Fore.RED + Style.BRIGHT} Isn't Completed {Style.RESET_ALL}"
-            #                     f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
-            #                 )
+                    if mission and status == "AVAILABLE":
+                        complete = await self.complete_mission(token, mission_id, proxy)
+                        if complete:
+                            self.log(
+                                f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
+                                f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                                f"{Fore.CYAN + Style.BRIGHT} Mission {Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT}{mission['title']}{Style.RESET_ALL}"
+                                f"{Fore.GREEN + Style.BRIGHT} Is Completed {Style.RESET_ALL}"
+                                f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                                f"{Fore.CYAN + Style.BRIGHT} Reward {Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT}{mission['points']} PTS{Style.RESET_ALL}"
+                                f"{Fore.CYAN + Style.BRIGHT} ]{Style.RESET_ALL}"
+                            )
+                        else:
+                            self.log(
+                                f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
+                                f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                                f"{Fore.CYAN + Style.BRIGHT} Mission {Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT}{mission['title']}{Style.RESET_ALL}"
+                                f"{Fore.RED + Style.BRIGHT} Isn't Completed {Style.RESET_ALL}"
+                                f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
+                            )
                         
-            #         else:
-            #             completed = True
+                    else:
+                        completed = True
 
-            #     if completed:
-            #         self.log(
-            #             f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
-            #             f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
-            #             f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-            #             f"{Fore.GREEN + Style.BRIGHT} All Available Mission Is Completed {Style.RESET_ALL}"
-            #             f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
-            #         )
-            # else:
-            #     self.log(
-            #         f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
-            #         f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
-            #         f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-            #         f"{Fore.RED + Style.BRIGHT} GET Mission Data Failed {Style.RESET_ALL}"
-            #         f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
-            #     )
+                if completed:
+                    self.log(
+                        f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
+                        f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
+                        f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                        f"{Fore.GREEN + Style.BRIGHT} All Available Mission Is Completed {Style.RESET_ALL}"
+                        f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
+                    )
+            else:
+                self.log(
+                    f"{Fore.CYAN + Style.BRIGHT}[ Account{Style.RESET_ALL}"
+                    f"{Fore.WHITE + Style.BRIGHT} {name} {Style.RESET_ALL}"
+                    f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+                    f"{Fore.RED + Style.BRIGHT} GET Mission Data Failed {Style.RESET_ALL}"
+                    f"{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}"
+                )
 
             host = "Unknown"
             ip = await self.user_ip(token, proxy)
