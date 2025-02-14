@@ -490,7 +490,7 @@ class AiGaea:
                     end="\r",
                     flush=True
                 )
-                await asyncio.sleep(600)
+                await asyncio.sleep(60)
     
     async def main(self):
         try:
