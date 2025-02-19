@@ -19,22 +19,17 @@ const crypto = require("crypto");
 
         const isExpired = Date.now() / 1000 >= decodedPayload.expire;
 
-        const account = accounts.find((a) => a.userid === decodedPayload.userid);
+        const account = accounts.find((a) => a.Browser_ID === decodedPayload.userid);
 
         if (account) {
           data = {
-            ...account,
-            Token: token,
-            expire: decodedPayload.expire,
-            isExpired,
+            Browser_ID: account.Browser_ID,
+            Token: token
           };
         } else {
           data = {
-            userid: decodedPayload.userid,
-            Token: token,
             Browser_ID: crypto.randomUUID(),
-            expire: decodedPayload.expire,
-            isExpired,
+            Token: token
           };
         }
 
@@ -51,3 +46,4 @@ const crypto = require("crypto");
 
   await main(); // Ensure to await the main function
 })();
+
